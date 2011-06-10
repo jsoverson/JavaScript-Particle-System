@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+   <!-- %META% -->
+
+	<title>JavaScript Particle System Sandbox</title>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/ui-darkness/jquery-ui.css"/>
+	<link rel="stylesheet" type="text/less" href="./css/particleController.css"/>
+	   
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/frameworks/less-1.1.3.min.js"       type="text/javascript" charset="utf-8"></script>
+	<script src="./js/particleSystem/Display.js"          type="text/javascript" charset="utf-8"></script>
+	<script src="./js/particleSystem/Particle.js"         type="text/javascript" charset="utf-8"></script>
+	<script src="./js/particleSystem/ParticleEmitter.js"  type="text/javascript" charset="utf-8"></script>
+	<script src="./js/particleSystem/ParticleSystem.js"   type="text/javascript" charset="utf-8"></script>
+	<script src="./js/particleSystem/Field.js"            type="text/javascript" charset="utf-8"></script>
+	<script src="./js/particleSystem/Util.js"             type="text/javascript" charset="utf-8"></script>
+	<script src="./js/particleController.js"              type="text/javascript" charset="utf-8"></script>
+
+   <!-- %SCRIPT% -->
+</head>
+<body>
+	<div id="container">
+		<span><canvas id="display" width="1024" height="576"></canvas></span>
+	</div>
+
+	<div id="controlContainer1" class="controlContainer">
+   	<div class="showHideControls">
+   	   <p>Toggle</p>
+   	</div>
+	   <div class="controls" id="welcomeMessage">
+<!-- %CUSTOM_MESSAGE% -->
+   	   <div id="shortcuts">
+   	      <div>
+   	         <ul>
+   	            <li>A : toggle accelerations</li>
+   	            <li>P : toggle particles</li>
+   	            <li>V : toggle velocities</li>
+   	            <li>O : toggle objects</li>
+   	            <li>E : add emitter</li>
+   	            <li>F : add field</li>
+   	            <li>C : Clear</li>
+   	            <li>S : Step frame</li>
+   	            <li>Space : pause</li>
+   	         </ul>
+   	      </div>
+   	   </div>
+	   </div>
+	</div>
+
+	<div id="controlContainer2" class="controlContainer">
+   	<div class="showHideControls">
+   	   <p>Toggle Controls</p>
+   	</div>
+	   <div class="controls" id="displayControls">
+	      <ul>
+      	   <li><button id="addEmitter">New Emitter</button>                   </li>
+      	   <li><button id="addField">New Field</button>                   </li>
+      	   <li>Click Behavior</li>
+      	   <li>
+      	      <div id="clickBehavior">
+            		<input type="radio" id="clickBehavior1" name="clickBehavior" checked="checked" /><label for="clickBehavior1">Repel</label>
+            		<input type="radio" id="clickBehavior2" name="clickBehavior" /><label for="clickBehavior2">Attract</label>
+            		<input type="radio" id="clickBehavior3" name="clickBehavior" /><label for="clickBehavior3">None</label>
+      	      </div>
+      	   </li>
+            <li>&nbsp;</li>
+      	   <li><button id="startStop">Stop</button>                   </li>
+      	   <li><button id="step">Step Frame</button>                         </li>
+      	   <li><button id="objects">Hide objects</button>        </li>
+      	   <li><button id="info">Hide info</button>          </li>
+      	   <li><button id="particles">Hide particles</button>         </li>
+      	   <li><button id="accelerations">Show accelerations</button>     </li>
+      	   <li><button id="velocities">Show velocities</button>         </li>
+      	   <li><button id="clear">Clear</button>                       </li>
+      	   <li><button id="strings">Strings</button>                                 </li>
+      	   <li>Max Particles :</li>
+      	   <li id="maxParticles">
+      	      <button value="10"/>10</button>
+      	      <button value="500"/>500</button>
+      	      <button value="2000"/>2k</button>
+      	      <button value="5000"/>5k</button>
+      	      <button value="10000"/>10k</button>
+      	   </li>
+      	   <li>Particle Style</li>
+      	   <li id="particleStyle">
+      	      <button value="basic"/>Basic</button>
+      	      <button value="fancy"/>Fancy</button>
+      	   </li>
+      	</ul>
+   	</div>
+	</div>
+	<div id="footer">
+	   <button id="save">Save Locally</button>
+	   <button id="load">Load Locally</button>
+	   <span id="fbShare" style="cursor:pointer"><img src="fbShare.png" style="vertical-align:middle"></span>
+	   -
+	   <button class="loadExample" id="example1">Example 1</button>
+	   <button class="loadExample" id="example2">Example 2</button>
+	   <button class="loadExample" id="example3">Example 3</button>
+	   <button class="loadExample" id="example4">Example 4</button>
+	   <button class="loadExample" id="example5">Example 5</button>
+	   <button class="loadExample" id="bonus">Bonus</button>
+	</div>
+	<div id="floatingControls" class="closable">
+      <button id="closeFloatingControls"></button>
+      <button id="deleteObject"></button>
+	   <div id="variableControl">raierstientrsh</div>
+	</div>
+   <div id="error">
+      <p>
+         Your browser is a little out of date to view this demo. Please update your browser or try with the latest versions of any of the following :
+         <br><br><br><br>
+         <a href="http://www.google.com/chrome/">Chrome</a><br>
+         <a href="http://www.mozilla.com/en-US/firefox/fx/">Firefox</a><br>
+         <a href="http://www.apple.com/safari/">Safari</a><br>
+         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home">Internet Explorer</a>
+      </p>
+      <button onclick="$(this).closest('#error').hide();">Close Anyway</button>
+   </div>
+
+</html>
