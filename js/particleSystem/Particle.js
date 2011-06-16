@@ -19,7 +19,7 @@ Particle.prototype.submitToFields = function(fields) {
       // inlining what should be Vector object methods for performance reasons
       var vectorX = field.position.x - this.position.x;
       var vectorY = field.position.y - this.position.y;
-      var force = field.mass / Math.pow(vectorX*vectorX+vectorY*vectorY,1.5); 
+      var force = field.mass / Math.pow((vectorX*vectorX+field.mass/2+vectorY*vectorY+field.mass/2),1.5); 
       totalAccelerationX += vectorX * force;
       totalAccelerationY += vectorY * force;
    }
