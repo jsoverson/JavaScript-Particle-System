@@ -234,6 +234,7 @@ function deleteObject(object) {
    } else if (object.constructor == ParticleEmitter) {
       particleSystem.removeEmitter(object);
    }
+   updateHash();
 }
 
 function objectClicked(evt,thrower) {
