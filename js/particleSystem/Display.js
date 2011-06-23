@@ -3,7 +3,7 @@ function Display(canvas) {
    
 	self.canvas     = canvas;
 	self.context    = undefined;
-	self.framerate  = 80;
+	self.framerate  = 100;
 	self.numFrames  = 0;
 	self.paused     = true;
 	self.nextRedraw = 0;
@@ -20,11 +20,12 @@ function Display(canvas) {
 	   runningFrameTime  : 0
    };
 	
-	self.init = function(){	      
+	self.init = function(){
 		if(!self.canvas.getContext){
          self.error("No Context");
 			return;
 		}
+
 		self.context = self.canvas.getContext( "2d" );
 		self.context.scale(self.scale,self.scale);
 		
@@ -36,6 +37,11 @@ function Display(canvas) {
       self.canvas.onmouseover = function(evt) {self.fireEvent('mouseOver',evt)};
       self.canvas.onmousemove = function(evt) {self.fireEvent('mouseMove',evt)};
       
+      window.requestAnimFrame = window.requestAnimationFrame       || 
+         window.webkitRequestAnimationFrame || 
+         window.mozRequestAnimationFrame    || 
+         window.oRequestAnimationFrame      || 
+         window.msRequestAnimationFrame;
 
       self.addListener('draw', self);
       self.addListener('afterDraw', self);
@@ -64,7 +70,11 @@ function Display(canvas) {
 	   if (!self.paused) {
    		self.nextFrame();
 	   }
-      self.nextRedraw = setTimeout( function(){ self.main(); }, 1000/self.framerate );
+	   if (window.requestAnimFrame) {
+         window.requestAnimFrame(function(){ self.main(); });
+      } else {
+         self.nextRedraw = setTimeout( function(){ self.main(); }, 1000/self.framerate );
+      }
 	};
 	
 	self.nextFrame = function() {

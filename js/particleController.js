@@ -3,12 +3,12 @@ var particleSystem = null;
 var examples = {
    example1 : '0,basic:Sv1(2000|1|0|0|1|E360,230:2,0:8:-1:0.10:4|F700,230:-140:8)',
 //   example2 : '0,basic:Sv1(2000|1|0|0|1|E388,158:2,0:8:-1:0.10:4|F497,233:500|F442,240:-37)',
-   example2 : '0,basic:Sv1(2000|1|0|0|1|E388,158:2,0:8:-1:0.10:4|F443,211:500)',
+   example2 : '0,variable:Sv1(5000|1|0|0|1|E388,158:2,0:8:-1:0.10:4|F443,211:500)',
    example3 : '0,basic:Sv1(2000|0|0|0|1|E500,275:1.3,-0:8:-1:3.14:4|F650,275:-250|F350,275:-250|F500,125:-250|F500,425:-250|F606,381:-250|F606,169:-250|F397,381:-250|F397,169:-250)',
-   example4 : '0,basic:Sv1(2000|1|0|0|1|E217,453:1.913,-0.585:8:-1:0.10:4|F337,472:-140|F533,327:500|F672,393:-140|F284,347:-140)',
+   example4 : '0,variable:Sv1(2000|1|0|0|1|E217,453:1.913,-0.585:8:-1:0.10:4|F337,472:-140|F533,327:500|F672,393:-140|F284,347:-140)',
    example5 : '1,basic:Sv1(2000|0|1|0|0|E500,275:2,0:8:-1:3.14:4|F650,275:-140:8|F350,275:-140:8|F500,125:-140:8|F500,425:-140:8|F606,381:-140:8|F606,169:-140:8|F397,381:-140:8|F397,169:-140:8)',
    '3alt'   : '0,basic:Sv1(2000|1|0|0|1|E500,250:4,0:8:-1:3.14:4|F500,250:80)',
-   bonus : '0,fancy:Sv1(2000|0|0|0|1|E502,277:0.005,-0.3:15:130:3.14:4|F650,275:-250:8|F350,275:-250:8|F500,425:-250:8|F606,381:-250:8|F606,169:-250:8|F397,381:-250:8|F397,169:-250:8)'
+   bonus : '0,fancy:Sv1(5000|0|0|0|1|E502,277:0.005,-0.3:15:130:3.14:4|F650,275:-250:8|F350,275:-250:8|F500,425:-250:8|F606,381:-250:8|F606,169:-250:8|F397,381:-250:8|F397,169:-250:8)'
 };
 var particleStyle = 'basic';
 var programmaticUpdate = false;
@@ -111,8 +111,8 @@ function registerButtons() {
    $('#accelerations').click(toggleAccelerations);
    $('#velocities').click(toggleVelocities);
    $('#particles').click(toggleParticles);
-   $('#maxParticles > button').click(function(){particleSystem.maxParticles = $(this).val();});
-   $('#particleStyle > button').click(function(){changeParticleDrawStyle($(this).val());});
+   $('#maxParticles > button').click(function(){particleSystem.maxParticles = $(this).val();updateHash();});
+   $('#particleStyle > button').click(function(){changeParticleDrawStyle($(this).val());updateHash();});
    //http://www.facebook.com/share.php?u=<;url>
    $('#fbShare').click(function(){
          var url = location;
@@ -167,14 +167,17 @@ function changeParticleDrawStyle(style) {
    particleStyle = style || 'basic';
    var styles = {
       basic : function() {
-   		display.context.globalCompositeOperation = "source-over"
-   		Particle.globalDrawColor = "#437EDE";
-         Particle.prototype.draw = Particle.prototype.drawQuick;
+   		Particle.GLOBAL_DRAW_COLOR = [255,80,40,255];
+         Particle.prototype.draw = Particle.prototype.drawBasic;
+      },
+      variable : function() {
+//   		Particle.GLOBAL_DRAW_COLOR = [66,167,222,255];
+   		Particle.GLOBAL_DRAW_COLOR = [66,167,180,255];
+         Particle.prototype.draw = Particle.prototype.drawVariable;
       },
       fancy : function() {
-   		display.context.globalCompositeOperation = "lighter";
-   		Particle.globalDrawColor = "rgba(166,67,0,.7)";
-         Particle.prototype.draw = Particle.prototype.drawSize;
+   		Particle.GLOBAL_DRAW_COLOR = [166,67,0,255];
+         Particle.prototype.draw = Particle.prototype.drawSoft;
       }
    };
    if (styles[particleStyle]) {

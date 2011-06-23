@@ -177,11 +177,11 @@ function ParticleSystem(){
       var oldParticles = self.particles;
       var fields = self.fields;
       var updatedParticles = [];
-		for(var i = 0, l = oldParticles.length; i < l; i++) {
-         var particle = oldParticles[i];
+      var particle;
+		while(particle = oldParticles.pop()) {
 			if (particle.ttl > 0) {
 			   if (++particle.lived >= particle.ttl) {
-			      continue;
+			      continue; // particle dies.
 			   }
 			}
          particle.submitToFields(fields);
@@ -197,14 +197,14 @@ function ParticleSystem(){
    };
    
    self.drawParticles = function(display) {
-		display.context.beginPath();
-      display.strokeStyle(Particle.globalDrawColor);
-      display.fillStyle(Particle.globalDrawColor);
-		for( var i = 0, l = self.particles.length; i < l; i++ ){
-			self.particles[i].draw(display);
-		}
-      display.context.stroke();
-		
+      var imageData = display.context.getImageData(0,0,display.width,display.height);
+      var pixels = imageData.data;
+      var width = display.width;
+      var particle, i = -1;
+		while(particle = self.particles[++i]){
+		   particle.draw(pixels,display.width,display.height);
+      }
+		display.context.putImageData(imageData,0,0);
    };
 
    self.drawAccelerations = function(display) {
