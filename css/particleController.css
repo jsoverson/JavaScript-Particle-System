@@ -17,6 +17,7 @@ html {
       }
    }
 }
+
 .controlContainer {
    border:1px solid #555;
    background-color:#111;
@@ -45,6 +46,7 @@ html {
 }
 #controlContainer1 {
    left:0;
+   width:174px;
    #welcomeMessage {
       h3 {
          font-size:120%;
