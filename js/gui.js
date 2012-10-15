@@ -149,7 +149,7 @@ define(['examples','lib/Vector','lib/Particle','lib/Field','lib/Emitter'], funct
       this.display.draw.continuous = parts[0] === '1' ? true : false;
       //drawStyle.setValue(parts[1]);
       if (parts[2]) this.controllers.drawColor.setValue(parts[2].split('|'));
-      this.controllers.particleSize.setValue(parts[3] || 1);
+      this.controllers.particleSize.setValue(parts[3] || 2);
     },
     getCustomState : function() {
       var parts = [

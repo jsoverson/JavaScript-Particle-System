@@ -12,7 +12,7 @@ define(['lib/Vector'],function(Vector){
     this.lived        = 0;
   }
 
-  Particle.size = 1;
+  Particle.size = 2;
   Particle.color = [66,167,222,255];
   //Particle.GLOBAL_DRAW_COLOR = [166,67,0,255];
 
