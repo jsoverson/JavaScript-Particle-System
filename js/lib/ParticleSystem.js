@@ -162,7 +162,7 @@ define(
       },
       drawParticles : function () {
         var display = this.display;
-        display.context.globalCompositeOperation = 'darker';
+        //display.context.globalCompositeOperation = 'darker';
         display.context.fillStyle = 'rgba(' + Particle.color.join(',') + ')';
         var size = Particle.size;
         _(this.particles).each(function(particle){
